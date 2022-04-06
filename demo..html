@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="./find.js"></script>
+    <script>
+      const findindex = findIndex(
+        [{ val: 1 }, { val: 2 }, { val: 3 }],
+        (item, index) => item.val === 3
+      );
+      console.log(findindex, 'findIndex res');
+
+      const findlastIndex = findLastIndex(
+        [{ val: 1 }, { val: 2 }, { val: 3 }],
+        (item, index) => item.val === 3
+      );
+      console.log(findlastIndex, 'findLastIndex res');
+
+      const findres = find(
+        [{ val: 1 }, { val: 2 }, { val: 3 }],
+        (item, index) => item.val === 2
+      );
+      console.log(findres, 'find res');
+    </script>
+  </body>
+</html>

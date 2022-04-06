@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="\"></div>
+    <!-- 中间件处理 高阶组件调用 -->
+    <script>
+      const arr = [
+        (res) => {
+          return res;
+        },
+        (str) => `${str}++1`,
+        (str) => `${str}++2`,
+        (node) => `${node.type}++1`,
+      ];
+      const compose = (...fns) => {
+        fns = [...fns];
+        if (fns.length === 0) {
+          return (node) => node;
+        }
+        return fns.reduce((pre, cur) => (...args) => {
+          return pre(cur(...args));
+        });
+      };
+      // 中间件
+      const applyMiddleware =
+        (...middlewares) =>
+        (node) => {
+          return compose(...middlewares)(node);
+        };
+      const apply = applyMiddleware(...arr)({ type: 'node' });
+    </script>
+    <!-- 树节点 -->
+    <script>
+      const treeData = [
+        { id: 1, name: '部门1', pid: 0 },
+        { id: 2, name: '部门2', pid: 1 },
+        { id: 3, name: '部门3', pid: 1 },
+        { id: 4, name: '部门4', pid: 3 },
+        { id: 5, name: '部门5', pid: 4 },
+      ];
+      const handleTree = (data, id) => {
+        let result = [];
+        data.forEach((item) => {
+          if (item.pid === id) {
+            result.push({
+              ...item,
+              children: handleTree(treeData, item.id),
+            });
+          }
+        });
+        return result;
+      };
+      // const res = handleTree(treeData, 0);
+      // function arrayToTree(items) {
+      //   debugger;
+      //   const result = []; // 存放结果集
+      //   const itemMap = {}; //
+      //   for (const item of items) {
+      //     const id = item.id;
+      //     const pid = item.pid;
+
+      //     if (!itemMap[id]) {
+      //       itemMap[id] = {
+      //         children: [],
+      //       };
+      //     }
+
+      //     itemMap[id] = {
+      //       ...item,
+      //       children: itemMap[id]['children'],
+      //     };
+
+      //     const treeItem = itemMap[id];
+
+      //     if (pid === 0) {
+      //       result.push(treeItem);
+      //     } else {
+      //       if (!itemMap[pid]) {
+      //         itemMap[pid] = {
+      //           children: [],
+      //         };
+      //       }
+      //       itemMap[pid].children.push(treeItem);
+      //     }
+      //   }
+      //   return result;
+      // }
+      // const res = arrayToTree(treeData);
+    </script>
+    <!-- arrayEach -->
+    <script>
+      // const arrayEach = (array, callback) => {
+      //   let index = -1,
+      //     length = array === null ? 0 : array.length;
+      //   while (++index < length) {
+      //     const isBreak = callback(array[index], index, array);
+      //     if (isBreak === false) {
+      //       break;
+      //     }
+      //   }
+      // };
+      // const arrs = [1, 3, 4, 5, 6];
+
+      // arrayEach(arrs, (item, index, array) => {
+      //   console.log(item, index, array, 'item, index, arr');
+      // });
+
+      // const arrayEachRight = (array, callback) => {
+      //   length = array === null ? 0 : array.length;
+      //   while (length--) {
+      //     const isBreak = callback(array[length], length, array);
+      //     if (isBreak === false) {
+      //       break;
+      //     }
+      //   }
+      // };
+      // arrayEachRight(arrs, (item, index, array) => {
+      //   console.log(item, index, array, 'item, index, arr');
+      // });
+    </script>
+    <script>
+      console.log('arrayEach');
+    </script>
+    <script>
+      const flot = (arr) =>
+        arr.reduce((pre, cur) => {
+          console.log('执行', pre, cur);
+          return Array.isArray(cur) ? [...pre, ...flot(cur)] : pre.concat(cur);
+        }, []);
+      console.log(
+        flot([
+          4343,
+          [43, [5]],
+          [4343, [43434, 5555, [4, [54545]]], 10, 90, 100],
+        ]),
+        'flot'
+      );
+
+      // 一道面试题：传递两个参数m，n，返回长度为m，所有元素都为n的数组，要求不能用循环。
+
+      // 利用函数的递归和 concat() 方法可以实现，代码如下：
+      function fn(m, n) {
+        return m ? fn(m - 1, n).concat(n) : [];
+      }
+      console.log(fn(10, 3));
+    </script>
+  </body>
+</html>
