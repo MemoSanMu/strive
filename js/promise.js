@@ -48,12 +48,13 @@ const handleResolvePromise = (newP, result = undefined, resolve, reject) => {
   if (newP === result) {
     return reject(new TypeError('循环引用'))
   }
-  let called
+
   // 如果result不为空，且是函数或者对象
   if (
     result !== null &&
     (typeof result === 'object' || typeof result === 'function')
   ) {
+    let called
     try {
       const then = result.then
       if (typeof then === 'function') {
@@ -71,6 +72,8 @@ const handleResolvePromise = (newP, result = undefined, resolve, reject) => {
           }
         )
       } else {
+        if (called) return
+        called = true
         resolve(result)
       }
     } catch (error) {
