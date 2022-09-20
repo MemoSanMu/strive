@@ -89,12 +89,12 @@ class MyPromise {
     return resultNewPromise
   }
   static resolve(val) {
-    if (val instanceof myPromise) {
+    if (val instanceof MyPromise) {
       return val
     }
 
     if (typeof val === 'object') {
-      return new myPromise((resolve, reject) => {
+      return new MyPromise((resolve, reject) => {
         if (val.then) {
           if (typeof val.then === 'function') {
             val.then(resolve, reject)
@@ -106,7 +106,7 @@ class MyPromise {
         }
       })
     } else {
-      return new myPromise((resolve, reject) => {
+      return new MyPromise((resolve, reject) => {
         resolve(val)
       })
     }
