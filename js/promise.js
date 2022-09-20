@@ -39,46 +39,6 @@ function MyPromise(executor) {
   }
 }
 
-const handleResolvePromise = (newP, result, resolve, reject) => {
-  // 循环引用
-  if (newP === result) {
-    reject(new TypeError('Chaining cycle'))
-  }
-
-  // 如果result不为空，且是函数或者对象
-  if (result && (typeof result === 'object' || typeof result === 'function')) {
-    let called
-    try {
-      const then = result.then
-      if (typeof then === 'function') {
-        then.call(
-          result,
-          (res) => {
-            if (called) return
-            called = true
-            handleResolvePromise(newP, res, resolve, reject)
-          },
-          (err) => {
-            if (called) return
-            called = true
-            reject(err)
-          }
-        )
-      } else {
-        if (called) return
-        called = true
-        resolve(result)
-      }
-    } catch (error) {
-      if (called) return
-      called = true
-      reject(error)
-    }
-  } else {
-    resolve(result)
-  }
-}
-
 // 执行then，将then的cb参数存储到对应的执行队列中
 MyPromise.prototype.then = function (resolve, reject) {
   resolve = typeof resolve === 'function' ? resolve : (v) => v
@@ -137,6 +97,104 @@ MyPromise.prototype.then = function (resolve, reject) {
     }
   })
   return resultNewPromise
+}
+
+MyPromise.prototype.resolve = (v) => {
+  if (v instanceof MyPromise) {
+    return v
+  }
+  if (typeof v === 'object') {
+    return new MyPromise((resolve, reject) => {
+      if (v.then) {
+        if (typeof v.then === 'function') {
+          v.then(resolve, reject)
+        } else {
+          resolve(v)
+        }
+      } else {
+        resolve(v)
+      }
+    })
+  } else {
+    return new MyPromise((resolve) => {
+      resolve(v)
+    })
+  }
+}
+
+MyPromise.prototype.all = (promises) => {
+  return new MyPromise((resolve, reject) => {
+    let count = 0
+    const result = []
+    for (let index = 0; index < promises.length; index++) {
+      MyPromise.prototype.resolve(promises[index]).then(
+        (res) => {
+          result.push(res)
+          count++
+          if (count === promises.length) {
+            resolve(result)
+          }
+        },
+        (err) => reject(err)
+      )
+    }
+  })
+}
+
+MyPromise.prototype.race = (promises) => {
+  return new MyPromise((resolve, reject) => {
+    for (let index = 0; index < promises.length; index++) {
+      MyPromise.prototype.resolve(promises[index]).then(resolve, reject)
+    }
+  })
+}
+
+MyPromise.prototype.catch = (reject) => {
+  return MyPromise.prototype.then(undefined, reject)
+}
+
+MyPromise.prototype.finally = (fn) => {
+  return MyPromise.prototype.then(fn, fn)
+}
+
+function handleResolvePromise(newP, result, resolve, reject) {
+  // 循环引用
+  if (newP === result) {
+    reject(new TypeError('Chaining cycle'))
+  }
+
+  // 如果result不为空，且是函数或者对象
+  if (result && (typeof result === 'object' || typeof result === 'function')) {
+    let called
+    try {
+      const then = result.then
+      if (typeof then === 'function') {
+        then.call(
+          result,
+          (res) => {
+            if (called) return
+            called = true
+            handleResolvePromise(newP, res, resolve, reject)
+          },
+          (err) => {
+            if (called) return
+            called = true
+            reject(err)
+          }
+        )
+      } else {
+        if (called) return
+        called = true
+        resolve(result)
+      }
+    } catch (error) {
+      if (called) return
+      called = true
+      reject(error)
+    }
+  } else {
+    resolve(result)
+  }
 }
 
 const pro = new MyPromise((resolve, reject) => {
