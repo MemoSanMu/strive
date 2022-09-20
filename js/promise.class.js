@@ -9,12 +9,12 @@ class MyPromise {
     this.onFulfilledCallback = []
     this.onRejectedCallback = []
     try {
-      cb(this.resolve.bind(this), this.reject.bind(this))
+      cb(this.resolveFn.bind(this), this.rejectFn.bind(this))
     } catch (err) {
-      this.reject(err)
+      this.rejectFn(err)
     }
   }
-  resolve(v) {
+  resolveFn(v) {
     if (this.state === MyPromise.PENDING) {
       this.state = MyPromise.FULFILLED
       this.value = v
@@ -22,7 +22,7 @@ class MyPromise {
       this.onFulfilledCallback.forEach((fn) => fn())
     }
   }
-  reject(reason) {
+  rejectFn(reason) {
     if (this.state === MyPromise.PENDING) {
       this.state = MyPromise.REJECTED
       this.reason = reason
@@ -88,6 +88,60 @@ class MyPromise {
     })
     return resultNewPromise
   }
+  static resolve(val) {
+    if (val instanceof myPromise) {
+      return val
+    }
+
+    if (typeof val === 'object') {
+      return new myPromise((resolve, reject) => {
+        if (val.then) {
+          if (typeof val.then === 'function') {
+            val.then(resolve, reject)
+          } else {
+            resolve(val)
+          }
+        } else {
+          resolve(val)
+        }
+      })
+    } else {
+      return new myPromise((resolve, reject) => {
+        resolve(val)
+      })
+    }
+  }
+  all(promises) {
+    return new MyPromise((resolve, reject) => {
+      let count = 0
+      const result = []
+      for (let index = 0; index < promises.length; index++) {
+        MyPromise.resolve(promises[index]).then(
+          (res) => {
+            result.push(res)
+            count++
+            if (count === promises.length) {
+              resolve(result)
+            }
+          },
+          (err) => reject(err)
+        )
+      }
+    })
+  }
+  catch(reject) {
+    return this.then(undefined, reject)
+  }
+  finally(fn) {
+    return this.then(fn, fn)
+  }
+  race(promises) {
+    return new MyPromise((resolve, reject) => {
+      for (let index = 0; index < promises.length; index++) {
+        MyPromise.resolve(promises[index]).then(resolve, reject)
+      }
+    })
+  }
 }
 
 const pro = new MyPromise((resolve, reject) => {
@@ -96,6 +150,7 @@ const pro = new MyPromise((resolve, reject) => {
   setTimeout(() => {
     // 成功后返回
     resolve('res')
+    // reject('error')
   }, 1000)
 
   // 接口异常 ｜ 接口异常
@@ -122,6 +177,9 @@ const pro = new MyPromise((resolve, reject) => {
   })
   .then((res) => {
     console.log('last then', res)
+  })
+  .catch((err) => {
+    console.log(err, 'err')
   })
 
 function handleResolvePromise(newP, result, resolve, reject) {
@@ -174,12 +232,12 @@ function handleResolvePromise(newP, result, resolve, reject) {
 // }
 // 第三步 执行 yarn test
 
-// MyPromise.defer = MyPromise.deferred = function () {
-//   let dfd = {}
-//   dfd.promise = new MyPromise((resolve, reject) => {
-//     dfd.resolve = resolve
-//     dfd.reject = reject
-//   })
-//   return dfd
-// }
-// module.exports = MyPromise
+MyPromise.defer = MyPromise.deferred = function () {
+  let dfd = {}
+  dfd.promise = new MyPromise((resolve, reject) => {
+    dfd.resolve = resolve
+    dfd.reject = reject
+  })
+  return dfd
+}
+module.exports = MyPromise
