@@ -12,25 +12,24 @@ function MyPromise(executor) {
   this.reason = undefined
   this.onFulfilledCallback = [] // 存放成功时的回调函数
   this.onRejectedCallback = [] // 存放时的失败的回调函数
-  const that = this
 
   // resolveFn（）和rejected（）这里为什么要用setTimeout将它变为异步执行呢？
   // 因为如果不用setTimeout这种方式的话，若Promise里面的代码是同步代码，在执行到reject或者resolve的时候，还没有执行then，所以数组里还没有值，
   // 这个时候调用的话不会报错但是不会输出任何结果，用setTimeout转为异步的话，会先去执行then方法，将回调收集到数组里，然后再去执行异步任务，这个时候就有值了
   const resolveFn = (res) => {
-    if (that.state === PENDING) {
-      that.state = FULFILLED
-      that.value = res
+    if (this.state === PENDING) {
+      this.state = FULFILLED
+      this.value = res
       // 异步完成后 将存储的then函数回调执行并且返回(透传)resolve的结果，在then的时候就能取到 promise内部resolve的 'res'
-      that.onFulfilledCallback.forEach((fn) => fn())
+      this.onFulfilledCallback.forEach((fn) => fn())
     }
   }
 
   const rejectFn = (reason) => {
-    if (that.state === PENDING) {
-      that.state = REJECTED
-      that.reason = reason
-      that.onRejectedCallback.forEach((fn) => fn())
+    if (this.state === PENDING) {
+      this.state = REJECTED
+      this.reason = reason
+      this.onRejectedCallback.forEach((fn) => fn())
     }
   }
   try {
@@ -175,12 +174,12 @@ const pro = new MyPromise((resolve, reject) => {
   })
 
 // 在手写的promiseXXX.js添加以下代码，其中改成自己定义promise.js名字
-MyPromise.defer = MyPromise.deferred = function () {
-  let dfd = {}
-  dfd.promise = new MyPromise((resolve, reject) => {
-    dfd.resolve = resolve
-    dfd.reject = reject
-  })
-  return dfd
-}
-module.exports = MyPromise
+// MyPromise.defer = MyPromise.deferred = function () {
+//   let dfd = {}
+//   dfd.promise = new MyPromise((resolve, reject) => {
+//     dfd.resolve = resolve
+//     dfd.reject = reject
+//   })
+//   return dfd
+// }
+// module.exports = MyPromise
