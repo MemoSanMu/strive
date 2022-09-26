@@ -15,10 +15,10 @@ export function assign() {
 
 
 /**
- * args
+ * while循环语句
  * @returns objects combine
  */
-function assign() {
+export function assignWhile() {
  let index = arguments.length 
   while (--index > 0) {
     for (let key in arguments[index]) {
