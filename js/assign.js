@@ -12,3 +12,21 @@ export function assign() {
 
   return arguments[0];
 }
+
+
+/**
+ * args
+ * @returns objects combine
+ */
+function assign() {
+ let index = arguments.length 
+  while (--index > 0) {
+    for (let key in arguments[index]) {
+       if (key === "__proto__") {
+        continue;
+      }
+      arguments[index - 1][key] = arguments[index][key];
+    }
+}
+ return arguments[0];
+}
