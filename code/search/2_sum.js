@@ -1,11 +1,11 @@
-const arr = Array.from(new Array(50)).map((v, i) => i + 1);
+const arr = Array.from(new Array(50)).map((v, i) => Math.floor(Math.random() * 100));
 
-const target = 4;
+const target = Math.floor(Math.random() * 200);
 
 const getTargetSumIndex = (data, t) => {
   let ind = 0;
   const getIndex = (array, ind) => {
-    if (ind === data.length - 1) {
+    if (ind === data.length - 1 || !t) {
       return {
         ind,
         element: null
@@ -14,11 +14,10 @@ const getTargetSumIndex = (data, t) => {
     const cur = t - data[ind];
     for (let index = 0; index < array.length; index++) {
       const element = array[index];
-      console.log(`${element} = ${cur}`);
       if (element === cur) {
         return {
-          first: `value：${data[ind]} -- index：${ind}`,
-          last: `value：${element} -- index：${index}`
+          value: `${data[ind]} + ${cur}`,
+          index: `first：${ind} -- last：${index}`
         };
       }
     }
