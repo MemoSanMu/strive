@@ -5,6 +5,7 @@
 // 输出：2
 // 解释：F(3) = F(2) + F(1) = 1 + 1 = 2
 
+// 数组方式，动态规划
 const flb = (n) => {
   const arr = [0, 1];
   for (let index = 2; index <= n; index++) {
@@ -13,4 +14,12 @@ const flb = (n) => {
   return arr[n];
 };
 
-console.log(flb(3)); // 2
+// 递归方式
+const fbl2 = (n) => {
+  if (n === 1 || n === 2) {
+    return 1;
+  }
+  return fbl2(n - 1) + fbl2(n - 2);
+};
+
+console.log(flb(8), fbl2(8)); // 2
