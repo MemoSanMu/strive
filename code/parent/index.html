@@ -61,5 +61,20 @@
       console.log(b2, 'b');
     </script>
     <!-- 还有什么寄生虫继承，原型试继承 === -->
+    <script>
+      // 原型式继承
+      // 原型式继承是通过使用一个临时构造函数和**Object.create()**方法来实现继承。
+      // 这种方式可以实现属性和方法的继承，但是不能传递构造函数的参数。
+      var parent = {
+        name: 'Parent',
+        sayHello: function () {
+          console.log('Hello');
+        }
+      };
+
+      var child1 = Object.create(parent);
+      console.log(child1.name); // Parent
+      child1.sayHello(); // Hello
+    </script>
   </body>
 </html>
