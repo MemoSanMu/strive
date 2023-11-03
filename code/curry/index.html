@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 定义一个普通的函数，它接收两个参数并返回他们的和
+      function add(x, y) {
+        return x + y;
+      }
+
+      // 编写一个curry函数，它可以对任何函数进行科里化
+      function curry(fn) {
+        // 获取除第一个参数外的其他参数
+        var args = Array.prototype.slice.call(arguments, 1);
+
+        // 返回一个新函数，如果参数足够执行则调用原来的函数，否则继续科里化
+        return function () {
+          var newArgs = args.concat(Array.prototype.slice.call(arguments));
+          if (newArgs.length >= fn.length) {
+            return fn.apply(this, newArgs);
+          } else {
+            return curry.call(this, fn, ...newArgs);
+          }
+        };
+      }
+
+      // 使用curry函数对add进行科里化
+      var curriedAdd = curry(add);
+
+      //   // 调用curriedAdd函数，返回一个新函数
+      //   var add1 = curriedAdd(1);
+
+      //   // 继续调用新函数，返回结果2
+      //   console.log(add1(1)); // 2
+
+      // 另一种调用方式
+      console.log(curriedAdd(2)(3)); // 5
+
+      //   function curry(fn) {
+      //     const preArgv = Array.prototype.slice.call(arguments, 1); // 截取第一个
+
+      //     return (...argv) => {
+      //       const curArgv = preArgv.concat(Array.prototype.slice.call(argv));
+      //       return curArgv.length >= fn.length
+      //         ? fn.apply(this, curArgv)
+      //         : curry.call(this, fn, ...curArgv);
+      //     };
+      //   }
+    </script>
+  </body>
+</html>
