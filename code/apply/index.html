@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      Function.prototype.myApply = function (context, args) {
+        if (typeof this !== 'function') {
+          throw new TypeError('被调用必须是函数');
+        }
+
+        if (args && !Array.isArray(args)) {
+          throw new TypeError('参数必须是数组');
+        }
+        context = context || globalThis; // 是否有this，没有默认全局
+        const fn = Symbol('k'); // 创建唯一键名
+        context[fn] = this; // this 就是函数myCall本身
+        const result = args && args.length ? context[fn](...args) : context[fn](); // 执行
+        delete context[fn]; // 移除
+        return result;
+      };
+
+      const test = {
+        name: 'xxx',
+        hello: function () {
+          console.log(`hello,${this.name}!`);
+        }
+      };
+      const obj = { name: 'world' };
+      test.hello.myApply(obj); //hello,world!
+      test.hello.apply(obj); //hello,world!
+      const arr = [2, 3, 6, 5, 1, 7, 9, 5, 0];
+      console.log(Math.max.myApply(null, arr)); //9
+      console.log(Math.max.apply(null, arr)); //9
+    </script>
+  </body>
+</html>

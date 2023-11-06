@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      Function.prototype.myCall = function (context, ...args) {
+        if (typeof this !== 'function') {
+          throw new TypeError('被调用必须是函数');
+        }
+        context = context || globalThis; // 是否有this，没有默认全局
+        const fn = Symbol('k'); // 创建唯一键名
+        context[fn] = this; // this 就是函数myCall本身
+        const result = context[fn](...args); // 执行
+        delete context[fn]; // 移除
+        return result;
+      };
+
+      const test = {
+        name: 'xxx',
+        hello: function () {
+          console.log(`hello,${this.name}!`);
+        },
+        add: function (a, b) {
+          return a + b;
+        }
+      };
+      const obj = { name: 'world' };
+      test.hello.myCall(obj); //hello,world!
+      test.hello.call(obj); //hello,world!
+      console.log(test.add.myCall(null, 1, 2)); //3
+      console.log(test.add.call(null, 1, 2)); //3
+    </script>
+  </body>
+</html>
