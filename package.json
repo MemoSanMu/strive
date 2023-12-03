@@ -1,5 +1,7 @@
 {
   "scripts": {
-    "test": "promises-aplus-tests ./js/promise.js"
-  }
+    "test-es5-promise": "promises-aplus-tests ./js/promise.js",
+    "test-es6-class-promise": "promises-aplus-tests ./code/promise/index.js"
+  },
+  "devDependencies": {}
 }
