@@ -1,11 +1,27 @@
 const catchMap = new WeakMap(); // 缓存对象 防止无限循环
 
 function deepClone(val) {
-  if (typeof val !== 'object' || typeof val === null) {
+  if (val === null || typeof val !== 'object' || val instanceof Date || val instanceof RegExp) {
     return val;
   }
   if (catchMap.has(val)) {
     return catchMap.get(val);
+  }
+  if (val instanceof Set) {
+    const resSet = new Set();
+    catchMap.set(val, resSet);
+    for (const iterator of val) {
+      resSet.add(deepClone(iterator));
+    }
+    return resSet;
+  }
+  if (val instanceof Map) {
+    const resMap = new Map();
+    catchMap.set(val, resMap);
+    for (const iterator of val) {
+      resMap.set(iterator[0], deepClone(iterator[1]));
+    }
+    return resMap;
   }
   let res = Array.isArray(val) ? [] : {};
   Object.setPrototypeOf(res, Object.getPrototypeOf(val)); // 设置原型，res的原型为val的原型。保证原型统一
@@ -27,11 +43,35 @@ class Person {
   getName() {}
 }
 
-const obj = new Person();
+let map = new Map();
+map.set('key1', 1);
+map.set('key2', [1, 2, 3]);
+let set = new Set();
+set.add([1, 2, 3]);
+set.add(123);
 
-Person.prototype.a = 1;
+const obj = {
+  a: 1,
+  b: [1, 2, 3, 4],
+  c: Number(3),
+  d: String(4),
+  e: {
+    e1: 1,
+    e2: [1, 2, 3]
+  },
+  f: new RegExp(),
+  g: map,
+  s: set,
+  h: undefined,
+  i: null,
+  j: Symbol('j'),
+  k: new Date(),
+  p: new Person()
+};
+
+Person.prototype.prototype_1 = 1;
 
 obj.o = obj;
 
 const res = deepClone(obj);
-console.log(res, 'res');
+console.log(res, 'deepClone');
