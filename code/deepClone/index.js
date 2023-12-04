@@ -50,6 +50,10 @@ let set = new Set();
 set.add([1, 2, 3]);
 set.add(123);
 
+let set2 = new Set();
+set2.add([2, 3, 4]);
+set2.add(67);
+
 const obj = {
   a: 1,
   b: [1, 2, 3, 4],
@@ -62,11 +66,12 @@ const obj = {
   f: new RegExp(),
   g: map,
   s: set,
+  set2,
   h: undefined,
   i: null,
   j: Symbol('j'),
   k: new Date(),
-  p: new Person()
+  p: new Person('zhangsan', 18)
 };
 
 Person.prototype.prototype_1 = 1;
