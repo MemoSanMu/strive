@@ -1,34 +1,35 @@
-function timeout(time) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve();
-    }, time);
-  });
-}
 class SuperTask {
   constructor(n = 2) {
-    this.num = n;
-    this.runningCount = 0;
     this.tasks = [];
+    this.maxCount = n;
+    this.runningCount = 0;
   }
   add(task) {
-    return new Promise((res, rej) => {
-      this.tasks.push({ task, res, rej });
+    return new Promise((resolve, reject) => {
+      this.tasks.push({ task, resolve, reject });
       this._run();
     });
   }
   _run() {
-    while (this.tasks.length && this.runningCount < this.num) {
-      const { task, res, rej } = this.tasks.shift();
+    while (this.tasks.length && this.runningCount < this.maxCount) {
+      const { task, resolve, reject } = this.tasks.shift();
       this.runningCount++;
       task()
-        .then(res, rej)
+        .then(resolve, reject)
         .finally(() => {
           this.runningCount--;
           this._run();
         });
     }
   }
+}
+
+function timeout(time) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, time);
+  });
 }
 
 const superTask = new SuperTask();
