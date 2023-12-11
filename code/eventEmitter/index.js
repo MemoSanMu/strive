@@ -26,6 +26,13 @@ class EventEmitter {
     }
     this.events[k] = this.events[k].filter((fn) => fn !== v);
   }
+  once(k, v) {
+    const fn = (...args) => {
+      v(...args);
+      this.del(k, fn);
+    };
+    this.on(k, fn);
+  }
 }
 
 const ee = new EventEmitter();
