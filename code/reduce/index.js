@@ -1,6 +1,6 @@
 // https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce#accumulator
 
-Array.prototype.handReduce = function name(fn, init) {
+Array.prototype.handReduce = function (fn, init) {
   const target = this; // 这个this指向的是调用这个函数的数组对象
   // 异常
   // TypeError
