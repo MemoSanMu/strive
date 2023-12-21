@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="process" style="width: 1px; height: 5px; background-color: black;"></div>
+    <script>
+      var a = 1
+      var process = document.getElementById('process')
+      function updateProcess() {
+        console.log(arguments);
+        // console.log(new Date().getMilliseconds())
+        if(a <= 100) {
+          process.style.width = a + 'px'
+          a++
+          requestAnimationFrame(updateProcess)
+        }
+      }
+      requestAnimationFrame(updateProcess)
+    </script>
+  </body>
+
+</html>
