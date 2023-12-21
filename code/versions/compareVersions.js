@@ -9,7 +9,8 @@ function compareVersions(versions) {
         let l = a.split('.')
         let r = b.split('.')
         let i = 0
-        while (true) {
+        let maxLen = Math.max(l.length, r.length)
+        while (i < maxLen) {
             // 获取当前分隔的前后值
             const pre = l[i]
             const cur = r[i]
