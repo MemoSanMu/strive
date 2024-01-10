@@ -12,8 +12,8 @@ function bigintAddtion(a, b) {
   let i = maxLen - 1;
   while (i >= 0) {
     const val = Number(a[i]) + Number(b[i]) + add;
-    res = (val % 10) + res;
-    add = Math.floor(val / 10);
+    res = (val % 10) + res; // 通过10取余，获取个位数
+    add = Math.floor(val / 10); // 通过值除10取整，获取十位数
     i--;
   }
   if (add) {
