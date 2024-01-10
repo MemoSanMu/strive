@@ -22,7 +22,7 @@ function findTarget(head, target) {
     let index = 0
     while (head && head.val !== null) {
         if (head.val === target) {
-            return indexs
+            return index
         }
         index++
         head = head.next // 持续遍历
