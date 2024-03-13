@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      .drag-content {
+        width: 100px;
+        height: 100px;
+        background-color: greenyellow;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        /* animation: 1s linear infinite alternate move; */
+      }
+      @keyframes move {
+        from {
+          transform: translateX(10px) rotate(0deg);
+        }
+        to {
+          transform: translateX(400px) rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="drag-content"></div>
+    <script>
+      const dragContent = document.querySelector('.drag-content')
+
+      dragContent.onmousedown = (e) => {
+        // offsetX 鼠标点击在当前元素的坐标
+        const pageX = e.offsetX
+        const pageY = e.offsetY
+        window.onmousemove = (e) => {
+          // pageX 鼠标移动距离浏览器窗口的坐标
+          const x = e.pageX - pageX
+          const y = e.pageY - pageY
+          dragContent.style.left = x + 'px'
+          dragContent.style.top = y + 'px'
+        }
+        dragContent.onmouseup = () => {
+          window.onmousemove = null
+        }
+        // 鼠标松开取消事件
+        window.onmouseup = function () {
+          // 解绑在页面上滚动的事件
+          window.onmousemove = null
+        }
+      }
+    </script>
+  </body>
+</html>
