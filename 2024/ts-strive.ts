@@ -3,6 +3,14 @@ interface UserInfo {
   age: number
 }
 
+// age必填、除了age非必填
+type RequireOrPartial = Required<Pick<UserInfo, 'age'>> & Partial<Omit<UserInfo, 'age'>>
+
+const requireOrPartial: RequireOrPartial = {
+  age: 18,
+  name: '123'
+}
+
 type PickType = Pick<UserInfo, 'name'> // 选择一个属性作为新类型
 
 // 它的实现
