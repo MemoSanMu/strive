@@ -6,7 +6,8 @@ function reactive(target) {
   if (target === null || typeof target !== 'object') {
     return target
   }
-  const proxy = new Proxy(target, {
+  // 监听器
+  const observer = new Proxy(target, {
     get(target, prop, receiver) {
       const value = Reflect.get(target, prop, receiver)
       const res = isObject(value) ? reactive(value) : value
@@ -24,7 +25,7 @@ function reactive(target) {
       return res
     }
   })
-  return proxy
+  return observer
 }
 
 const state = reactive({
@@ -41,3 +42,8 @@ state.dong = 'new dong' // ok
 delete state.dong // ok
 
 state.a.b = 'new b' // ok
+
+const arrState = reactive([1, 2])
+
+arrState.pop()
+arrState.push(3)
