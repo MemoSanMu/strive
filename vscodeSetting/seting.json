@@ -1,0 +1,184 @@
+{
+  "workbench.iconTheme": "material-icon-theme",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[ts]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[less]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "files.associations": {
+    "*.js": "javascriptreact",
+    "*.tpl": "html",
+    "*.cjson": "jsonc",
+    "*.wxss": "css",
+    "*.wxs": "javascript"
+  },
+  "editor.formatOnType": true, // 开启自动格式化
+  // prettier 配置
+  // 这个配置是去掉文件里面的所有分号
+  "prettier.semi": false, // 我需要 所以我注视掉了它
+  // "prettier.semi": true, // 暂时开启，有项目要去除
+  "prettier.singleQuote": true, // 使用单引号
+  "prettier.jsxSingleQuote": true, // 单引号
+  "prettier.bracketSpacing": true, // 在对象文字中的括号之间打印空格
+  "prettier.trailingComma": "none", //末尾不加逗号
+  "prettier.printWidth": 120, //每行代码最佳长度，超过就换行
+  "prettier.tabWidth": 2, // 指定每个缩进级别的空格数
+  "launch": {
+    "configurations": [],
+    "compounds": []
+  },
+  "js/ts.implicitProjectConfig.experimentalDecorators": true,
+  // 文件头部注释
+  // "fileheader.customMade": {
+  //   "Descripttion": "",
+  //   "version": "",
+  //   "Author": "wangsen",
+  //   "Date": "Do not edit",
+  //   "LastEditors": "wangsen",
+  //   "LastEditTime": "Do not Edit"
+  // },
+  "fileheader.customMade": {
+    "autoAdd": false // 取消头部注释
+  },
+  //函数注释
+  "fileheader.cursorMode": {
+    "description": "",
+    "param": "",
+    "return": ""
+  },
+  "fileheader.configObj": {
+    "createFileTime": true,
+    "language": {
+      "languagetest": {
+        "head": "/$$",
+        "middle": " $ @",
+        "end": " $/"
+      }
+    },
+    "autoAdd": true,
+    "autoAddLine": 100,
+    "autoAlready": true,
+    "annotationStr": {
+      "head": "/*",
+      "middle": " * @",
+      "end": " */",
+      "use": false
+    },
+    "headInsertLine": {
+      "php": 2,
+      "sh": 2
+    },
+    "beforeAnnotation": {
+      "文件后缀": "该文件后缀的头部注释之前添加某些内容"
+    },
+    "afterAnnotation": {
+      "文件后缀": "该文件后缀的头部注释之后添加某些内容"
+    },
+    "specialOptions": {
+      "特殊字段": "自定义比如LastEditTime/LastEditors"
+    },
+    "switch": {
+      "newlineAddAnnotation": true
+    },
+    "supportAutoLanguage": [],
+    "prohibitAutoAdd": ["json"],
+    "folderBlacklist": ["node_modules", "文件夹禁止自动添加头部注释"],
+    "prohibitItemAutoAdd": ["项目的全称, 整个项目禁止自动添加头部注释, 可以使用快捷键添加"],
+    "moveCursor": true,
+    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+    "atSymbol": ["@", "@"],
+    "atSymbolObj": {
+      "文件后缀": ["头部注释@符号", "函数注释@符号"]
+    },
+    "colon": [": ", ": "],
+    "colonObj": {
+      "文件后缀": ["头部注释冒号", "函数注释冒号"]
+    },
+    "filePathColon": "路径分隔符替换",
+    "showErrorMessage": false,
+    "writeLog": false,
+    "wideSame": false,
+    "wideNum": 13,
+    "functionWideNum": 0,
+    "CheckFileChange": false,
+    "createHeader": true,
+    "useWorker": false,
+    "designAddHead": false,
+    "headDesignName": "random",
+    "headDesign": false,
+    "cursorModeInternalAll": {},
+    "openFunctionParamsCheck": true,
+    "functionParamsShape": ["{", "}"],
+    "functionBlankSpaceAll": {},
+    "functionTypeSymbol": "*",
+    "typeParamOrder": "type param",
+    "customHasHeadEnd": {},
+    "throttleTime": 60000
+  },
+  "gitlens.views.stashes.files.layout": "list",
+  "editor.formatOnSave": true, // 值设置为true时，每次保存的时候prettier自动格式化 【prettier】
+  "editor.formatOnPaste": true, // 粘贴不格式话化
+  "cSpell.userWords": ["wxwork"],
+  "terminal.integrated.enableMultiLinePasteWarning": false,
+  "cSpell.patterns": [],
+  "files.eol": "\n",
+  "[shellscript]": {
+    "files.eol": "auto"
+  },
+  "workbench.colorTheme": "Default Dark+",
+  "json.schemas": [
+    {
+      "fileMatch": ["/myfile"],
+      "url": "schemaURL"
+    }
+  ],
+  "files.trimTrailingWhitespace": true,
+  // 格式化【eslint】【用prettier可以注释掉以下配置】
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "eslint.autoFixOnSave": "never"
+  },
+  "eslint.enable": true, // 启用/禁用 eslint
+  "eslint.options": {
+    "extensions": [".js", ".vue", ".jsx", ".tsx"]
+  },
+  "emmet.includeLanguages": {
+    "wxml": "html"
+  },
+  "minapp-vscode.disableAutoConfig": true,
+  "terminal.integrated.focusAfterRun": "terminal",
+  "code-runner.defaultLanguage": "javascript",
+  "typescript.locale": "zh-CN",
+  "leetcode.endpoint": "leetcode-cn",
+  "leetcode.workspaceFolder": "/Users/wangsen/.leetcode",
+  "leetcode.defaultLanguage": "javascript",
+  "leetcode.hint.commandShortcut": false,
+  "leetcode.hint.configWebviewMarkdown": false,
+  "leetcode.hint.commentDescription": false,
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
+  "codeium.enableConfig": {
+    "*": true,
+    "typescript": false
+  },
+  "leetcode.filePath": {
+    "default": {
+      "folder": "",
+      "filename": "${id}.${kebab-case-name}.${ext}"
+    }
+  }
+}
