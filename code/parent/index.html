@@ -6,7 +6,7 @@
     <title>Document</title>
   </head>
   <body>
-    <!-- <script>
+    <script>
       // 一 原型链继承
       //   缺点：所有的继承者都公用一个对象，对原型的修改会影响子对象
       function Parent(n, t) {
@@ -22,13 +22,13 @@
         this.child = 'child'
       }
 
-      Child.prototype = new Parent() // 原型链继承
+      Child.prototype = new Parent('zs', 'person') // 原型链继承
 
       const child = new Child()
       child.getName()
-      console.log(child, '原型链继承')
-    </script> -->
-    <script>
+      console.log(child.type, '原型链继承')
+    </script>
+    <!-- <script>
       // 二 构造函数继承
       // 缺点：实现了继承，但是无法继承父类的函数（原型），只能继承父类的属性
       function A(name) {
@@ -42,7 +42,7 @@
       }
       const b = new B('b')
       console.log(b, '构造函数继承')
-    </script>
+    </script> -->
     <!-- <script>
       // 三 组合继承
       // 优点：既能继承属性也能继承方法

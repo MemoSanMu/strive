@@ -5,7 +5,7 @@ class TaskPro {
     this.currentIndex = 0
     this.next = async () => {
       this.currentIndex++
-      await this._runningWork()
+      await this._doWork()
     }
   }
   addTask(task) {
@@ -15,25 +15,27 @@ class TaskPro {
     if (this.running || !this.tasks.length) {
       return
     }
-    // 执行完成
     if (this.currentIndex >= this.tasks.length) {
       this._resetTasks()
       return
     }
-    this.running = true
-    this._runningWork()
+    this._doWork()
   }
-  async _runningWork() {
+  async _doWork() {
     const task = this.tasks[this.currentIndex]
-    const i = this.currentIndex
+    let pre = this.currentIndex
+    this.running = true
     await task(this.next)
-    const j = this.currentIndex
     this.running = false
-    if (i === j) {
+    let cur = this.currentIndex
+    // 说明没有手动调用 next
+    if (pre === cur) {
+      // 那么就需要自动next
       this.currentIndex++
       this.run()
     }
   }
+
   _resetTasks() {
     this.tasks = []
     this.running = false

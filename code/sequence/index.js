@@ -2,26 +2,26 @@
 
 function sequence(...funcs) {
   return function (val) {
-    return funcs.reduceRight((pre, curCb) => curCb(pre), val);
-  };
+    return funcs.reduceRight((pre, curCb) => curCb(pre), val)
+  }
 }
 
 function multiplyTwo(num) {
-  return num * 2;
+  return num * 2
 }
 function minusOne(num) {
-  return num - 1;
+  return num - 1
 }
 function addTwo(num) {
-  return num + 2;
+  return num + 2
 }
 function addThree(num) {
-  return num + 3;
+  return num + 3
 }
 
-const res = sequence(addThree, addTwo, minusOne, multiplyTwo)(10); //24˜
+const res = sequence(addThree, addTwo, minusOne, multiplyTwo)(10) //24˜
 
-console.log(res, 'res');
+console.log(res, 'res')
 
 // 真骚;
 /**
@@ -34,8 +34,8 @@ console.log(res, 'res');
  * @return {Function}
  */
 
-export function sequence(...funcs) {
-  return function (value) {
-    return funcs.reduce((val, fn) => fn.call(null, val), value);
-  };
-}
+// export function sequence(...funcs) {
+//   return function (value) {
+//     return funcs.reduce((val, fn) => fn.call(null, val), value)
+//   }
+// }

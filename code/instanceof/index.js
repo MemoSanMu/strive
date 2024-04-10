@@ -2,32 +2,32 @@
 
 function myInstanceOf(left, right) {
   if (!['object', 'function'].includes(typeof left) || left === null) {
-    return false;
+    return false
   }
 
-  let proto = Object.getPrototypeOf(left);
+  let proto = Object.getPrototypeOf(left)
   while (proto !== null) {
     if (proto === right.prototype) {
-      return true;
+      return true
     }
-    proto = Object.getPrototypeOf(proto);
+    proto = Object.getPrototypeOf(proto)
   }
-  return false;
+  return false
 }
 
 class MyClass {}
 
-const obj = new MyClass();
+const obj = new MyClass()
 
-console.log(myInstanceOf(obj, MyClass)); // true
-console.log(myInstanceOf(obj, Array)); // false
+console.log(myInstanceOf(obj, MyClass)) // true
+console.log(myInstanceOf(obj, Array)) // false
 
-let Fn = function () {};
-let p1 = new Fn();
+let Fn = function () {}
+let p1 = new Fn()
 
-console.log(myInstanceOf({}, Object)); // true
-console.log(myInstanceOf(p1, Fn)); // true
-console.log(myInstanceOf({}, Fn)); // false
-console.log(myInstanceOf(null, Fn)); // false
-console.log(myInstanceOf(1, Fn)); // false
-console.log(myInstanceOf(function a() {}, Function)); // true
+console.log(myInstanceOf({}, Object)) // true
+console.log(myInstanceOf(p1, Fn)) // true
+console.log(myInstanceOf({}, Fn)) // false
+console.log(myInstanceOf(null, Fn)) // false
+console.log(myInstanceOf(1, Fn)) // false
+console.log(myInstanceOf(function a() {}, Function)) // true
