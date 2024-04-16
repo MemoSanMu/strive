@@ -16,11 +16,11 @@ Function.prototype.myBind = function (context, ...args) {
   }
   const self = this
   return function () {
-    const params = [...args, ...arguments]
+    const combineArgs = [...args, ...arguments]
     if (new.target) {
-      return new self(...params)
+      return new self(...combineArgs) // new 调用函数
     }
-    return this.apply(context, params)
+    return self.apply(context, combineArgs) // 执行调用函数
   }
 }
 
