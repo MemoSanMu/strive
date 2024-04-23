@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // deadline
+      //  timeRemaining 函数获取当前是否还有空闲时间可以使用
+      //  didTimeout 用来判断当前的回调函数是否因超时而被执行（超时配置在）
+
+      let tasks = new Array(100).fill(0).map((i, index) => (deadline) => {
+        console.log(deadline.timeRemaining(), 'timeRemaining', deadline)
+      })
+
+      function runTask(deadline) {
+        // IdleDeadline 接口是在调用 Window.requestIdleCallback() 时创建的闲置回调的输入参数的数据类型。
+        // 它提供了 timeRemaining() 方法，用来判断用户代理预计还剩余多少闲置时间；以及 didTimeout (en-US) 属性，用来判断当前的回调函数是否因超时而被执行。
+
+        // IdleDeadline.didTimeout (en-US) 只读
+        // 一个布尔值，如果回调是因为超过了设置的超时时间而被执行的，则其值为 true。
+
+        // deadline.didTimeout这个超时时间不配置可以不写，配置了 强制执行回调函数可能会出现问题
+        // 比如：在回调内部更改了元素的几何信息，由于在此回调调用之前几何信息已经是算好了的，在此更改会使得浏览器重新计算（回流），然后如果在内部使用了
+        // clientWidth getBoundingClientRect 等方法，会导致重新计算。 并立即执行渲染，影响性能。
+        while ((deadline.timeRemaining() > 0 || deadline.didTimeout) && tasks.length) {
+          const task = tasks.shift()
+          task(deadline)
+        }
+        if (tasks.length) {
+          requestIdleCallback(runTask)
+        }
+      }
+      requestIdleCallback(runTask)
+    </script>
+  </body>
+</html>
