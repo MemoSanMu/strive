@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .section {
+        border: 100px solid transparent;
+        border-bottom: 100px solid red;
+        width: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="section"></div>
+    <script>
+      const globalWindow = (0, eval)('window')
+      window.proxy = globalWindow
+      window.proxy.getProxyKey = 'text'
+      const proxyWindow = new Proxy(window.proxy, {
+        get(target, key) {
+          const res = Reflect.get(target, key)
+          console.log(key)
+          return res
+        }
+      })
+
+      ;(function (window) {
+        with (window) {
+          const getProxyKey = window.getProxyKey
+        }
+      })(window.proxy)
+    </script>
+  </body>
+</html>
