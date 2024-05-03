@@ -1,11 +1,36 @@
 class VNode {
   constructor({ tag, attrs, children }) {
-    this.tag = tag
-    this.attrs = attrs
-    this.children = children
+    this.tag = tag;
+    this.attrs = attrs;
+    this.children = children;
   }
 }
 
+// jsx模版语法
+{
+  /* <div class="container-wrapper" id="container">
+  <h2 id="h2">this is h2</h2>
+  <div id="box">this is box</div>
+  <ul id="ul">
+    <li id="li">this is li 1</li>
+    <li id="li2">this is li 2</li>
+    <li id="li3">this is li 3</li>
+  </ul>
+</div>; */
+}
+
+// babel jsx_runtime 转换成 virtual dom
+
+// jsx('div', { id: 'container', className: 'container-wrapper' }, [
+//   h('h2', { id: 'h2' }, 'this is h2'),
+//   h('div', { id: 'box' }, 'this is box'),
+//   h('ul', { id: 'ul' }, [
+//     h('li', { id: 'li' }, 'this is li 1'),
+//     h('li', { id: 'li2' }, 'this is li 2'),
+//     h('li', { id: 'li3' }, 'this is li 3'),
+// ])
+
+// jsx 通过 React.createElement 创建react 元素，也就是虚拟dom virtual dom
 const vNodeOps = {
   tag: 'div',
   attrs: { id: 'container', className: 'container-wrapper' },
@@ -13,12 +38,12 @@ const vNodeOps = {
     {
       tag: 'h2',
       attrs: { id: 'h2' },
-      children: 'this is h2'
+      children: 'this is h2',
     },
     {
       tag: 'div',
       attrs: { id: 'box' },
-      children: 'this is box'
+      children: 'this is box',
     },
     {
       tag: 'ul',
@@ -27,52 +52,54 @@ const vNodeOps = {
         {
           tag: 'li',
           attrs: { id: 'li' },
-          children: 'this is li 1'
+          children: 'this is li 1',
         },
         {
           tag: 'li',
           attrs: { id: 'li2' },
-          children: 'this is li 2'
+          children: 'this is li 2',
         },
         {
           tag: 'li',
           attrs: { id: 'li3' },
-          children: 'this is li 3'
-        }
-      ]
-    }
-  ]
-}
+          children: 'this is li 3',
+        },
+      ],
+    },
+  ],
+};
 
-const virtualDom = new VNode(vNodeOps)
+const virtualDom = new VNode(vNodeOps);
 
 const createElement = (vNode) => {
-  const { tag, attrs, children } = vNode
+  const { tag, attrs, children } = vNode;
   // 创建div
-  let ele = document.createElement(tag)
+  let ele = document.createElement(tag);
   if (attrs) {
     Object.entries(attrs).forEach(([key, val]) => {
-      ele.setAttribute(key, val)
-    })
+      ele.setAttribute(key, val);
+    });
   }
   // 创建文本节点
   if (typeof children === 'string') {
-    ele.appendChild(document.createTextNode(children))
+    ele.appendChild(document.createTextNode(children));
   } else {
-    const frameEle = document.createDocumentFragment()
+    const frameEle = document.createDocumentFragment();
     children.forEach((child) => {
-      frameEle.appendChild(createElement(child))
-    })
-    ele.appendChild(frameEle)
+      frameEle.appendChild(createElement(child));
+    });
+    ele.appendChild(frameEle);
   }
-  return ele
-}
+  return ele;
+};
 
-const app = document.getElementById('app')
+const app = document.getElementById('app');
 
-const container = createElement(virtualDom)
+const container = createElement(virtualDom);
 
 function render(app, container) {
-  app.appendChild(container)
+  app.appendChild(container);
 }
-render(app, container)
+
+// 将虚拟dom元素，生成真实的dom
+render(app, container);
