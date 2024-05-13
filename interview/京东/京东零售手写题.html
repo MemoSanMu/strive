@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // function htmlToTree(html) {
+      //   // 使用DOMParser将HTML字符串转换成DOM
+      //   const parser = new DOMParser();
+      //   const doc = parser.parseFromString(html, 'text/html');
+      //   console.log(doc.documentElement, 'doc');
+      //   // 将DOM的根元素转换为树形结构
+      //   return domToTree(doc.documentElement);
+
+      //   function domToTree(node) {
+      //     // 创建一个表示该节点的对象
+      //     let treeNode = {
+      //       tagName: node.tagName,
+      //       attributes: Array.from(node.attributes).reduce((attrs, attr) => {
+      //         attrs[attr.name] = attr.value;
+      //         return attrs;
+      //       }, {}),
+      //       children: [],
+      //     };
+
+      //     // 递归转换子节点
+      //     node.childNodes.forEach((child) => {
+      //       if (child.nodeType === Node.ELEMENT_NODE) {
+      //         treeNode.children.push(domToTree(child));
+      //       }
+      //     });
+
+      //     return treeNode;
+      //   }
+      // }
+
+      // // 使用示例
+      // const htmlString =
+      //   '<div class="test"><p>Hello</p><span>World</span></div>';
+      // const tree = htmlToTree(htmlString);
+      // console.log(tree);
+    </script>
+    <script src="./htmlToTree.js"></script>
+  </body>
+</html>
