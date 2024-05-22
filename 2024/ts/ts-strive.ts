@@ -65,7 +65,7 @@ class TypeFn<T extends object, U extends keyof T> {
 }
 
 // 范型断言
-const obj = {
+const objs = {
   name: 'sunflower',
   age: 18,
   address: 'beijing',
@@ -74,4 +74,4 @@ const obj = {
 function getObjKey<T>(obj: T, key: keyof T): T[keyof T] {
   return obj[key];
 }
-getObjKey(obj, 'address');
+getObjKey(objs, 'address');
