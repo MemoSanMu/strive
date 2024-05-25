@@ -14,5 +14,5 @@ type TreeDataT1<T> = {
 
 // 范性版2，使用交叉类型【这个比较秀】
 type TreeDataT2<T> = {
-  [key in keyof T]: T[key];
+  [K in keyof T]: T[K];
 } & { children?: TreeDataT2<T>[] };

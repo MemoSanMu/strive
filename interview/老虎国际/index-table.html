@@ -80,6 +80,12 @@
       // const keys = ['name', 'age', 'address'];
 
       // <Table dataSource={dataSource} columns={columns} />;
+
+      let obj1 = { age: 18 };
+      let obj2 = obj1;
+      obj1.prop = obj1 = { age: 19 };
+      console.log(obj1, 'obj1');
+      console.log(obj2, 'obj2');
     </script>
   </body>
 </html>
