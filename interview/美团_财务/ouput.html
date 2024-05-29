@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 我面试时输出的答案【输出错的三个是同一个问题，处于闭包环境中的作用域】
+      var scope = 123;
+      var obj = {
+        scope: 456,
+        getScope: function () {
+          var scope = 789;
+          console.log(scope);
+          console.log(this.scope);
+          var f = function () {
+            console.log(scope);
+            console.log(this.scope);
+          };
+          f();
+        },
+      };
+
+      obj.getScope(); // example: 输出 xxx/xxx，因为 xxx
+      // 789
+      // 456
+      // 789
+      // 123
+
+      var getScope = obj.getScope;
+      getScope();
+      // 789
+      // 123
+      // 123 【这个错了  闭包指向当前函数外层作用域 输出 789】
+      // 123
+
+      var a = { scope: 1 };
+      var b = { scope: 2 };
+      getScope.apply(a);
+      // 789
+      // 1
+      // 123 【这个错了  闭包指向当前函数外层作用域 输出 789】
+      // 123
+
+      console.log(getScope.bind(a)); // function () {}
+
+      getScope.bind(b).call(a);
+
+      // 789
+      // 2
+      // 123 【这个错了  闭包指向当前函数外层作用域 输出 789】
+      // 123
+    </script>
+  </body>
+</html>
