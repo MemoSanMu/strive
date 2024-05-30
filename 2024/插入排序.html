@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function insertionSort(arr) {
+        let len = arr.length;
+        for (let i = 1; i < len; i++) {
+          let cur = arr[i]; // 保存当前的值
+          let j = i - 1;
+          // 很巧妙的插入排序
+          // 每次前一个和当前值比较，前一个大于当前值，把当前值往后移动，并且指针向前移动，继续判断（前一个值是否大于cur当前值）
+          while (j >= 0 && arr[j] > cur) {
+            arr[j + 1] = arr[j];
+            j--;
+          }
+          arr[j + 1] = cur;
+        }
+        return arr;
+      }
+      insertionSort([5, 6, 3, 2, 6, 8, 1]);
+    </script>
+  </body>
+</html>
