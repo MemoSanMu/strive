@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /**
+       * @param {string} S
+       * @return {string[]}
+       */
+      var permutation = function (S) {
+        const str = S.split('').sort();
+        const ans = [];
+        const used = new Array(str.length).fill(false);
+        const dfs = (path) => {
+          if (path.length === str.length) {
+            ans.push(path.join(''));
+            return;
+          }
+          for (let i = 0; i < str.length; i++) {
+            if (used[i]) continue;
+            if (i > 0 && str[i] === str[i - 1] && !used[i - 1]) {
+              continue;
+            }
+            path.push(str[i]);
+            used[i] = true;
+            dfs(path);
+            path.pop();
+            used[i] = false;
+          }
+        };
+        dfs([]);
+        return ans;
+      };
+      const res = permutation('aab');
+      console.log(res);
+    </script>
+  </body>
+</html>
