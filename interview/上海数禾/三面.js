@@ -57,12 +57,12 @@
 // }
 
 function reverse(s) {
-  while (s.includes('(')) {
-    s = s.replaceAll(/\(([^()]*)\)/g, (_, val) =>
-      val.split('').reverse().join('')
-    );
-  }
-  return s;
+  // while (s.includes('(')) {
+  //   s = s.replaceAll(/\(([^()]*)\)/g, (_, val) =>
+  //     val.split('').reverse().join('')
+  //   );
+  // }
+  // return s;
 }
 
 // 例1：下面括号中的`def`被反转
@@ -82,25 +82,27 @@ console.log(reverse('ab(cd(ef)g)hi')); // 输出：abgefdchi
  * @param {string} s
  * @return {string}
  */
-// var reverseParentheses = function(s) {
-//     // 参考别人的题解，这个比较好理解
-//     // 我们可以用栈来存储括号的信息，因为右括号总是会匹配它左边最近的左括号。
-//     // 因此，每当我们找到一个左括号就入栈，找到一个右括号就出栈，就能知道哪里需要反转。
-//     let i = 0;
-//     const path = [] //
-//     let ans = s
-//     while (i < s.length) {
-//         const cur = s.charAt(i)
-//         if (cur === '(') {
-//             path.push(i + 1 )
-//         } else if (cur === ')'){
-//             const index = path.pop()
-//             ans = `${ans.slice(0, index)}${reverse(ans.slice(index, i))}${ans.slice(i)}`
-//         }
-//         i++
-//     }
-//     function reverse (str) {
-//         return str.split('').reverse().join('')
-//     }
-//     return ans.replace(/(\(|\))/g, '')
-// };
+var reverseParentheses = function (s) {
+  // 参考别人的题解，这个比较好理解
+  // 我们可以用栈来存储括号的信息，因为右括号总是会匹配它左边最近的左括号。
+  // 因此，每当我们找到一个左括号就入栈，找到一个右括号就出栈，就能知道哪里需要反转。
+  let i = 0;
+  const path = []; //
+  let ans = s;
+  while (i < s.length) {
+    const cur = s.charAt(i);
+    if (cur === '(') {
+      path.push(i + 1);
+    } else if (cur === ')') {
+      const index = path.pop();
+      ans = `${ans.slice(0, index)}${reverse(ans.slice(index, i))}${ans.slice(
+        i
+      )}`;
+    }
+    i++;
+  }
+  function reverse(str) {
+    return str.split('').reverse().join('');
+  }
+  return ans.replace(/(\(|\))/g, '');
+};
