@@ -3,7 +3,6 @@ const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
 
 class Scheduler {
   tasks = [];
-  isRunning = false;
   runCount = 0;
   constructor(limit = 2) {
     this.max = limit;
