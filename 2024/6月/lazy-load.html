@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="lazy-load-container">
+      <img
+        data-src="https://zmage.caldis.me/imgSet/childsDream/1.jpg"
+        alt="1"
+      />
+      <img
+        data-src="https://zmage.caldis.me/imgSet/childsDream/2.jpg"
+        alt="1"
+      />
+    </div>
+    <script>
+      const container = document.querySelectorAll('.lazy-load-container img');
+      function inView(dom) {
+        const rect = dom.getBoundingClientRect();
+        return (
+          rect.top >= 0 &&
+          rect.left >= 0 &&
+          rect.right <=
+            (window.innerWidth || document.documentElement.clientWidth) &&
+          rect.bottom <=
+            (window.innerHeight || document.documentElement.clientHeight)
+        );
+      }
+      addEventListener('scroll', (e) => {
+        container.forEach((item) => {
+          if (inView(item) && item.getAttribute('data-src')) {
+            item.src = item.getAttribute('data-src');
+            item.removeAttribute('data-src');
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
