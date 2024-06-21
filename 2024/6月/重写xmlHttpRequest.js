@@ -54,7 +54,7 @@ window.XMLHttpRequest = function () {
       }
     };
     xhr.open(_this.method, _this.url);
-    xhr.open(data);
+    xhr.send(data);
   };
 };
 
