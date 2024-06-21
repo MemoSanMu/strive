@@ -9,17 +9,18 @@ var object = { a: [{ b: { c: 3 } }] };
 // _.get(object, 'a.b.c', 'default');
 // // => 'default'
 
-function get(params, path, defaultValue) {
-  let res = params;
+function get(obj, path, defaultValue) {
+  let res = obj;
   if (typeof path === 'string') {
-    const reg = /[^\[\].]+/g;
-    path = path.match(reg);
+    const matchReg = /[^\[\].]+/g;
+    const matchArr = path.match(matchReg);
+    path = matchArr;
   }
-  for (const key of path) {
+  for (const val of path) {
     if (!res) {
       return defaultValue;
     }
-    res = res[key];
+    res = res[val];
   }
   return res === undefined ? defaultValue : res;
 }
