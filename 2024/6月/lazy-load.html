@@ -4,19 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      img {
+        display: inline-block;
+        width: 200px;
+        height: 200px;
+      }
+    </style>
   </head>
   <body>
     <div class="lazy-load-container">
-      <img
-        data-src="https://zmage.caldis.me/imgSet/childsDream/1.jpg"
-        alt="1"
-      />
-      <img
-        data-src="https://zmage.caldis.me/imgSet/childsDream/2.jpg"
-        alt="1"
-      />
+      <div>
+        <img
+          data-src="https://zmage.caldis.me/imgSet/childsDream/1.jpg"
+          alt="1"
+        />
+      </div>
+      <div>
+        <img
+          data-src="https://zmage.caldis.me/imgSet/childsDream/2.jpg"
+          alt="1"
+        />
+      </div>
     </div>
     <script>
+      // 实现图片懒加载 1、2，2个方式都行
+      // 1.当图片进入可视区域的时候，图片的src属性就会被设置为data-src属性的值
       const container = document.querySelectorAll('.lazy-load-container img');
       function inView(dom) {
         const rect = dom.getBoundingClientRect();
@@ -29,14 +42,39 @@
             (window.innerHeight || document.documentElement.clientHeight)
         );
       }
-      addEventListener('scroll', (e) => {
+      function init(params) {
         container.forEach((item) => {
           if (inView(item) && item.getAttribute('data-src')) {
             item.src = item.getAttribute('data-src');
             item.removeAttribute('data-src');
           }
         });
+      }
+      init();
+      addEventListener('scroll', (e) => {
+        init();
       });
+
+      // // 2.通过intersectionObserver实现
+      // // // 创建一个IntersectionObserver实例
+      // const intersectionObserver = new IntersectionObserver((entries) => {
+      //   entries.forEach((entry) => {
+      //     if (entry.isIntersecting) {
+      //       // 当元素与视窗交叉时执行的操作
+      //       const img = entry.target; // entry.target是交叉的元素
+      //       // 假设data-src属性包含了图片的路径
+      //       // img.src = img.dataset.src;
+      //       img.src = img.getAttribute('data-src');
+      //       img.removeAttribute('data-src');
+      //       intersectionObserver.unobserve(img); // 停止观察该元素
+      //     }
+      //   });
+      // });
+
+      // // 为所有需要滚动加载的元素（例如图片）设置观察
+      // container.forEach((img) => {
+      //   intersectionObserver.observe(img);
+      // });
     </script>
   </body>
 </html>
