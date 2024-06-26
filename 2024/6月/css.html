@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .wrapper {
+        display: flex;
+      }
+      .left {
+        width: 100px;
+        height: 100px;
+        background-color: red;
+      }
+      .right {
+        flex: 1;
+        height: 100px;
+        background-color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 面试题 06-26 -->
+    <!-- 7.左右布局，左侧元素宽度固定，右侧宽度flex:1，右侧元素内字体超过长度，会影响到左侧元素吗？ -->
+    <!-- 正常是不会，但是如果右侧元素过长会出现滚动条和溢出的情况 -->
+    <div class="wrapper">
+      <div class="left">left</div>
+      <div class="right">right</div>
+    </div>
+  </body>
+</html>
