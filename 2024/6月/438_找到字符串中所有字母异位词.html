@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function findAnagrams(s, p) {
+        const sL = s.length,
+          pL = p.length;
+        if (pL > sL) {
+          return [];
+        }
+        const ans = [];
+        const pMap = new Map(); // 维护了p的所以map集合
+
+        for (let key of p) {
+          pMap.set(key, (pMap.get(key) || 0) + 1);
+        }
+
+        const windowMap = new Map();
+        let count = 0;
+
+        let right = 0,
+          left = 0;
+        while (right < sL) {
+          const cur = s[right++]; // 0 ++ => 1
+          // 在p含有，就维护窗口map
+          if (pMap.has(cur)) {
+            windowMap.set(cur, (windowMap.get(cur) || 0) + 1);
+            if (windowMap.get(cur) === pMap.get(cur)) {
+              count++;
+            }
+          }
+
+          if (right - left === pL) {
+            if (count === pMap.size) {
+              ans.push(left);
+            }
+
+            const firstKey = s[left++];
+            if (pMap.has(firstKey)) {
+              if (windowMap.get(firstKey) === pMap.get(firstKey)) {
+                count--;
+              }
+              windowMap.set(firstKey, windowMap.get(firstKey) - 1);
+            }
+          }
+        }
+
+        return ans;
+      }
+      findAnagrams('cbaebabacd', 'abc');
+    </script>
+  </body>
+</html>
