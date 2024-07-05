@@ -10,3 +10,5 @@ type Tree1<T, U> = {
   id: T;
   name: U;
 } & { children?: Array<Tree<T, U>> };
+
+function getValue<T, K extends keyof T>(obj: T, key: K) {} // extends 类型约束
