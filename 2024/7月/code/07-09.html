@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      /* 第一种方式 */
+      /* .container {
+        width: 500px;
+        height: 500px;
+        border: 1px solid black;
+        display: flex;
+      }
+
+      .top-left {
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        align-self: flex-start;
+      }
+
+      .bottom-right {
+        align-self: flex-end;
+        margin-left: auto;
+        width: 100px;
+        height: 100px;
+        background-color: blue;
+      } */
+      /* 第二种方式 */
+      /* .container {
+        width: 500px;
+        height: 500px;
+        border: 1px solid black;
+        position: relative;
+      }
+
+      .top-left {
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+
+      .bottom-right {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 100px;
+        height: 100px;
+        background-color: blue;
+      } */
+      /* 第三种方式 */
+      .container {
+        height: 500px;
+        width: 500px;
+        border: 1px solid black;
+      }
+
+      .top-left {
+        width: 100px;
+        height: 100px;
+        background-color: red;
+      }
+
+      .bottom-right {
+        width: 100px;
+        height: 100px;
+        background-color: blue;
+        float: right;
+        margin-top: calc(100% - 200px);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="top-left"></div>
+      <div class="bottom-right"></div>
+    </div>
+  </body>
+</html>
