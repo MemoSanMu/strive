@@ -36,8 +36,8 @@ function request(url, ops = {}, maxCount = 3, interval = 200) {
   requestRetry(maxCount);
   return instance;
 }
-
-request('https://zmage.caldis.me/imgSet/childsDream/demo44.jpg', {
+// 正确的地址https://zmage.caldis.me/imgSet/childsDream/1.jpg
+request('https://zmage.caldis.me/imgSet/childsDream/13.jpg', {
   method: 'GET',
 })
   .then((res) => {
