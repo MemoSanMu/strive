@@ -19,7 +19,7 @@ function combineSort(arr1, arr2) {
   }
   // 剩余部分
   if (i < len1) ans.push(...arr1.slice(i));
-  if (i < len2) ans.push(...arr2.slice(j));
+  if (j < len2) ans.push(...arr2.slice(j));
   return ans;
 }
 const res = combineSort(arr1, arr2);
