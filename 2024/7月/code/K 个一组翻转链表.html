@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      class NewNode {
+        constructor(val, next) {
+          this.val = val;
+          this.next = next;
+        }
+      }
+
+      const head5 = new NewNode(5);
+      const head4 = new NewNode(4, head5);
+      const head3 = new NewNode(3, head4);
+      const head2 = new NewNode(2, head3);
+      const head = new NewNode(1, head2);
+
+      function reverseKGroup(head, k) {
+        let cur = head;
+        let count = 0;
+        while (cur && count < k) {
+          // 想让cur指针推进k个长度
+          cur = cur.next;
+          count++; // 计数 cur 实际推进的长度
+        }
+        if (count === k) {
+          debugger;
+          // 如果 cur 推进了 k 个长度
+          cur = reverseKGroup(cur, k); // 递归调用
+          while (count > 0) {
+            // k次循环
+            let next = head.next; // head指针推进
+            head.next = cur; // 让head节点的next指向cur
+            cur = head;
+            head = next; // head推进一步，cur尾随它
+            count--;
+          }
+          head = cur; // 让head指针重新指向新链的头结点
+        }
+        return head; // 返回头指针
+      }
+
+      console.log(reverseKGroup(head, 2));
+    </script>
+  </body>
+</html>
