@@ -3,5 +3,11 @@
     "test-es5-promise": "promises-aplus-tests ./js/promise.js",
     "test-es6-class-promise": "promises-aplus-tests ./code/promise/index.js"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "cli-table3": "^0.6.5",
+    "html-to-image": "^1.11.11",
+    "puppeteer": "^23.11.1"
+  }
 }
